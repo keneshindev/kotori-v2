@@ -1,0 +1,10 @@
+{
+  "name": "kotori-v2",
+  "version": "1.0.0",
+  "description": "Stupid Discord API wrapper, but now little bit better",
+  "main": "dist/index.js",
+  "repository": "https://github.com/keneshindev/kotori-v2.git",
+  "author": "keneshindev",
+  "license": "MIT",
+  "private": false
+}
