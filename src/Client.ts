@@ -1,9 +1,10 @@
 import EventEmitter from 'events'
 import { createApi } from './Api';
-import { Gateway } from './Gateway';
+import { Gateway, GatewayConnectOptions } from './Gateway';
 interface ClientCreateOptions {
     token: string;
-    selfbot?: boolean
+    selfbot?: boolean;
+    gateway?: GatewayConnectOptions
 }
 type ClientCreateOptionsType = ClientCreateOptions | string
 export class Client extends EventEmitter {
@@ -14,7 +15,7 @@ export class Client extends EventEmitter {
         let token: string = typeof options == "string"
             ? options
             : options.token;
-        this.api = createApi((options as ClientCreateOptions).selfbot ? "Bot " + token : token);
-        new Gateway().connect(this, token)
+        this.api = createApi((options as ClientCreateOptions).selfbot ? token : "Bot " + token);
+        new Gateway().connect(this, token, (options as ClientCreateOptions).gateway)
     }
 }

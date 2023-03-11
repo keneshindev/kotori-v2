@@ -5,21 +5,20 @@ type ApiHandlerThisType = {
     url: string,
     method: string
 }
-function apiHandler2(wtf2: ApiHandlerThisType) {
-    console.log(wtf2)
-    return (body: any, headers: RawAxiosRequestHeaders) => {
+function apiHandler(wtf2: ApiHandlerThisType) {
+    return async (body: any, headers: RawAxiosRequestHeaders) => {
         if (body && ["get", "delete"].includes(wtf2.method))
             throw new Error("GET or DELETE methods cannot contain body")
         if (!headers) headers = {}//ya pishov//ok gb
         if (!headers.Authorization) headers.Authorization = wtf2.token
         
-        axios.request({
+        return (await axios.request({
             method: wtf2.method,
             url: wtf2.url,
             baseURL: DISCORD_API_FULL_URL, // bruh different naming conventions im idiot
             headers,
             ...(body && body)
-        })
+        })).data;
     }
 }
 // function apiHandler(this: ApiHandlerThisType, body: any, headers: RawAxiosRequestHeaders) {
@@ -50,7 +49,7 @@ export function createApi(token: string) {
             if (!methods.includes(key.toLowerCase())) {
                 return new Proxy(target, { ...validator, url: [ ...this.url, key]} as typeof validator)
             }
-            else return apiHandler2({ url: "/" + this.url.join("/"), token, method: key })
+            else return apiHandler({ url: "/" + this.url.join("/"), token, method: key })
         }
     }
 
