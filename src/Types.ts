@@ -1,3 +1,4 @@
+// gateway events (op)
 export enum Opcode {
     Dispatch,
     Heartbeat,
@@ -5,11 +6,23 @@ export enum Opcode {
     PresenceUpdate,
     VoiceStateUpdate,
     Resume = 6,
-    Reconnect, RequestGuildMembers,
+    Reconnect, 
+	RequestGuildMembers,
     InvalidSession,
     Hello,
     HeartbeatAck
-}
+} 
+// uhhh wait
+export type ReceiveEvents = Opcode.Dispatch
+	| Opcode.Hello
+	| Opcode.HeartbeatAck
+	| Opcode.Reconnect
+	| Opcode.InvalidSession
+	| Opcode.Heartbeat
+//check hello.ts
+export type SendEvents = Opcode.Heartbeat
+	| Opcode.Identify
+
 export enum GatewayCloseCode {
     UnknownError = 4000,
     UnknownOpcode,
@@ -26,6 +39,7 @@ export enum GatewayCloseCode {
     InvalidIntents,
     DisallowedIntents
 }
+// dispatch events (op: 0)
 export enum GatewayDispatchEvents {
 	ApplicationCommandPermissionsUpdate = 'APPLICATION_COMMAND_PERMISSIONS_UPDATE',
 	ChannelCreate = 'CHANNEL_CREATE',
@@ -88,4 +102,4 @@ export enum GatewayDispatchEvents {
 	AutoModerationRuleDelete = 'AUTO_MODERATION_RULE_DELETE',
 	AutoModerationActionExecution = 'AUTO_MODERATION_ACTION_EXECUTION',
 	GuildAuditLogEntryCreate = 'GUILD_AUDIT_LOG_ENTRY_CREATE',
-}
+}//:essexcute://:essexcute:
